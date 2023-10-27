@@ -18905,7 +18905,8 @@ static int wlan_hdd_cfg80211_connect_start(struct hdd_adapter *adapter,
 					  &roam_profile->ch_params);
 		}
 
-		roam_profile->freq_hint = ch_freq_hint;
+		if (ch_freq_hint != 0)
+			roam_profile->freq_hint = ch_freq_hint;
 
 		if (wlan_hdd_cfg80211_check_pmf_valid(roam_profile)) {
 			status = -EINVAL;
@@ -20476,7 +20477,7 @@ static int __wlan_hdd_cfg80211_join_ibss(struct wiphy *wiphy,
 						 params->ssid_len,
 						 bssid.bytes, NULL,
 						 conn_info_channel,
-						 params->chandef.width);
+						 params->chandef.width, 0);
 
 	if (0 > status) {
 		hdd_err("connect failed");
